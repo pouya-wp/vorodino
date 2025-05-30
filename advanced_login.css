@@ -1,0 +1,814 @@
+/* استایل‌های کلی */
+:root {
+    --primary-color: #667eea;
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-color: #f093fb;
+    --success-color: #4ade80;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b;
+    --dark-bg: #1a1a1a;
+    --light-bg: #ffffff;
+    --text-dark: #222;
+    --text-light: #888;
+    --border-color: #e5e7eb;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --main-color: #ff5e3a;
+    --main-gradient: linear-gradient(90deg, #ff5e3a 0%, #ff763b 100%);
+    --radius: 22px;
+    --input-bg: #f7f7f7;
+    --input-border: #e0e0e0;
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+    --popup-bg: #fff;
+    --popup-blur: blur(12px);
+}
+
+body.dark-mode {
+    --input-bg: #23272f;
+    --input-border: #333;
+    --text-dark: #fff;
+    --text-light: #bbb;
+    background: #181c23;
+    --popup-bg: #23272f;
+}
+
+/* دکمه حساب کاربری */
+.advanced-login-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.advanced-login-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s;
+}
+
+.advanced-login-btn:hover::before {
+    left: 100%;
+}
+
+.advanced-login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+.advanced-login-btn:active {
+    transform: translateY(0);
+}
+
+/* منوی کاربر لاگین شده */
+.advanced-login-user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-account-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: var(--light-bg);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.user-account-btn:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border-color);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+.advanced-login-user-menu:hover .user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 12px 16px;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.user-dropdown a:last-child {
+    border-bottom: none;
+}
+
+.user-dropdown a:hover {
+    background: #f8fafc;
+    color: var(--primary-color);
+}
+
+/* پاپ اپ اصلی */
+.advanced-login-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.advanced-login-popup.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-overlay {
+    position: absolute; top:0; left:0; width:100vw; height:100vh;
+    background: rgba(0,0,0,0.18);
+    backdrop-filter: none;
+    transition: backdrop-filter 0.3s, background 0.3s;
+    z-index: 0;
+}
+
+.advanced-login-popup.active .popup-overlay,
+.memoji-popup.active .popup-overlay,
+.popup-overlay.blurred {
+    backdrop-filter: var(--popup-blur);
+    background: rgba(0,0,0,0.32);
+}
+
+.popup-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+    background: var(--popup-bg);
+    border-radius: var(--radius);
+    width: 95vw;
+    max-width: 450px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    z-index: 2;
+    min-height: 520px;
+    padding: 48px 36px 36px;
+}
+
+.advanced-login-popup.active .popup-container {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popup-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text-light);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.popup-close:hover {
+    background: rgba(0, 0, 0, 0.2);
+    transform: rotate(90deg);
+}
+
+/* هدر پاپ اپ */
+.popup-header {
+    background: var(--primary-gradient);
+    padding: 40px 30px 30px;
+    text-align: center;
+    color: white;
+}
+
+.popup-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    font-family: 'IRANSans', sans-serif;
+}
+
+.form-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: var(--radius-md);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* محتوای پاپ اپ */
+.popup-content {
+    padding: 40px 30px;
+}
+
+.form-container {
+    display: none;
+}
+
+.form-container.active {
+    display: block;
+    animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* فیلدهای فرم */
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 45px 15px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.form-group:has(label) .form-icon {
+    top: calc(50% + 16px);
+}
+
+.password-toggle {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 5px;
+}
+
+.form-group:has(label) .password-toggle {
+    top: calc(50% + 16px);
+}
+
+.verify-phone-btn {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.form-group:has(label) .verify-phone-btn {
+    top: calc(50% + 16px);
+}
+
+.verify-phone-btn:hover {
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* گزینه‌های فرم */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+.checkbox-label input {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    margin-left: 8px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.checkbox-label input:checked + .checkmark {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checkbox-label input:checked + .checkmark::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.forgot-password {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* دکمه ارسال */
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s;
+}
+
+.submit-btn:hover::before {
+    left: 100%;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.submit-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.submit-btn.loading::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* نشانگر قدرت رمز عبور */
+.password-strength {
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.password-strength::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: var(--error-color);
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.password-strength.weak::after {
+    width: 33%;
+    background: var(--error-color);
+}
+
+.password-strength.medium::after {
+    width: 66%;
+    background: var(--warning-color);
+}
+
+.password-strength.strong::after {
+    width: 100%;
+    background: var(--success-color);
+}
+
+/* کد تأیید */
+.verification-code input {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 8px;
+    font-family: monospace;
+}
+
+/* دکمه بازگشت */
+.back-to-login {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: var(--text-light);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.2s ease;
+}
+
+.back-to-login:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* انتخاب Memoji */
+.memoji-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    background: rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.memoji-popup.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.memoji-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--popup-bg);
+    border-radius: var(--radius);
+    padding: 32px 28px 24px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow);
+    min-height: 520px;
+    padding: 48px 36px 36px;
+}
+
+.memoji-container h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: var(--text-dark);
+}
+
+.memoji-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin: 32px 0 18px;
+    justify-items: center;
+}
+
+.memoji-item {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2.5px solid transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    cursor: pointer;
+    transition: border 0.2s, transform 0.15s;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.memoji-item:hover {
+    border-color: var(--main-color);
+    transform: scale(1.10);
+}
+
+.memoji-item.selected {
+    border-color: var(--main-color);
+    box-shadow: 0 0 0 3px rgba(255, 94, 58, 0.2);
+}
+
+.memoji-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.memoji-close {
+    width: 100%;
+    padding: 12px;
+    background: var(--main-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.memoji-close:hover {
+    background: linear-gradient(90deg, #ff763b 0%, #ff5e3a 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+
+/* پیام‌های اعلان */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: var(--radius-md);
+    color: white;
+    z-index: 999999;
+    transform: translateX(400px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    background: var(--success-color);
+}
+
+.notification.error {
+    background: var(--error-color);
+}
+
+.notification.warning {
+    background: var(--warning-color);
+}
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+    .popup-container {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .popup-header {
+        padding: 30px 20px 20px;
+    }
+    
+    .popup-content {
+        padding: 30px 20px;
+    }
+    
+    .popup-title {
+        font-size: 24px;
+    }
+    
+    .form-group input {
+        padding: 12px 40px 12px 12px;
+    }
+    
+    .memoji-grid {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 10px;
+    }
+    
+    .memoji-item {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 600px) {
+    .popup-container, .memoji-container { min-height: 380px; padding: 24px 4vw; }
+}
+
+/* انیمیشن‌های اضافی */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.3s ease;
+}
+
+/* تم تاریک */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light-bg: #1f2937;
+        --text-dark: #f9fafb;
+        --text-light: #d1d5db;
+        --border-color: #374151;
+    }
+    
+    .popup-container,
+    .memoji-container,
+    .user-dropdown {
+        background: var(--dark-bg);
+        color: var(--text-dark);
+    }
+    
+    .form-group input {
+        background: #374151;
+        color: var(--text-dark);
+        border-color: #4b5563;
+    }
+    
+    .form-group input:focus {
+        background: #4b5563;
+    }
+}
+
+body.dark-mode .popup-container, body.dark-mode .memoji-container {
+    background: #23272f;
+}
+
+body.dark-mode .advanced-notification {
+    background: #333 linear-gradient(90deg, #ff5e3a 0%, #ff763b 100%);
+}
+
+/* انیمیشن‌های استاندارد */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+.popup-container.show, .memoji-container.show { animation: fadeInUp 0.5s cubic-bezier(.4,0,.2,1); }
+
+/* لیبل فرم‌ها */
+.advanced-form .form-group label {
+    display: block;
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    margin-right: 2px;
+    position: relative;
+    text-align: right;
+    letter-spacing: 0.01em;
+    opacity: 0.95;
+}
+.advanced-form .form-group label.required:after {
+    content: '*';
+    color: #e53935;
+    margin-right: 2px;
+    font-size: 1.1em;
+    vertical-align: middle;
+}
